@@ -5,3 +5,4 @@ export const usersRoutes = Router()
 const usersController = new UsersController()
 
 usersRoutes.post('/', usersController.create)
+usersRoutes.put('/:user_id', usersController.update)
