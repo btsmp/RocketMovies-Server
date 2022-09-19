@@ -1,40 +1,11 @@
-import { Request, Response } from 'express';
+import { UserBodyRequest, User } from "../utils/types"
 import { hash, compare } from 'bcrypt'
+import { Response } from 'express'
+
 import knex from "../database/knex"
 
-interface UserInputProps {
-  user_id: number
-  name: string
-  email: string
-  password: string
-  oldPassword: string
-}
-
-interface User {
-  id: number
-  name: string
-  email: string
-  password: string
-  avatar?: string
-  created_at: string
-  updated_at: string
-}
-
-interface UserBodyRequestProps extends Request {
-  body: UserInputProps
-}
-
 export class UsersController {
-  /* 
-Create - POST para poder criar um registro
-Update - PUT para atualizar um registro
-
-Index - GET para listar varios registros
-Show - GET para exibir um registro especifico
-Delete - DELETE para remover um registro
-*/
-
-  async create(request: UserBodyRequestProps, response: Response) {
+  async create(request: UserBodyRequest, response: Response) {
     const { name, email, password } = request.body
 
     const checkUserExists = await knex("users").where({ email }).first()
@@ -45,25 +16,23 @@ Delete - DELETE para remover um registro
       })
     }
 
-
     const hashedPassword = await hash(password, 8)
 
-
-    await knex('users').insert({ name, email, password: hashedPassword })
+    await knex('users').insert({
+      name,
+      email,
+      password: hashedPassword
+    })
 
 
     return response.status(201).json({
       message: 'deu tudo certo'
     })
-
-
   }
 
-  async update(request: UserBodyRequestProps, response: Response) {
+  async update(request: UserBodyRequest, response: Response) {
     const { name, email, password, oldPassword } = request.body
     const { user_id } = request.params
-    console.log(oldPassword)
-    console.log('oi')
 
     const user: User = await knex('users').where({ id: user_id }).first()
 
@@ -78,7 +47,6 @@ Delete - DELETE para remover um registro
     user.name = name ?? user.name
     user.email = email ?? user.email
 
-
     if (!oldPassword && password) {
       console.log(oldPassword)
       return response.json({
@@ -86,23 +54,23 @@ Delete - DELETE para remover um registro
       })
     }
 
+    if (oldPassword && password) {
 
-    const passwordMatches = await compare(oldPassword, user.password)
+      const passwordMatches = await compare(oldPassword, user.password)
 
-    if (!passwordMatches) {
-      return response.json({
-        message: "senha incorreta"
-      })
+      if (!passwordMatches) {
+        return response.json({
+          message: "senha incorreta"
+        })
+      }
+
+      user.password = await hash(password, 8)
     }
-
-    user.password = await hash(password, 8)
 
     await knex('users')
       .where({ id: user_id })
-      .update({ password: user.password })
+      .update(user)
 
-
-    console.log(user)
     response.json({ user })
   }
 }
