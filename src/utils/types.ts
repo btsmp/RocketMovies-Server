@@ -17,10 +17,14 @@ interface UserInputProps {
   oldPassword?: string
 }
 
-export interface UserBodyRequest extends Request {
-  body: UserInputProps
+interface params {
+  id: number
 }
 
+export interface UserBodyRequest extends Request {
+  body: UserInputProps
+  user: params
+}
 
 export interface MovieNotes {
   id: number
@@ -35,6 +39,7 @@ interface MovieNotesInput {
   title: string
   description: string
   rating: number
+  id?: number
   tags: []
 }
 
@@ -47,4 +52,14 @@ export interface Tags {
   name: string
   note_id: number
   user_id: number
+}
+
+
+interface TSessions {
+  email: string
+  password: string
+}
+
+export interface SessionsRequest extends Request {
+  body: TSessions
 }
