@@ -7,7 +7,7 @@
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "build": "tsc",
     "dev": "tsnd src/server.ts",
-    "migrate": "npx knex migrate:latest"
+    "migrate": "knex --knexfile knexfile.ts migrate:latest"
   },
   "keywords": [],
   "author": "Bruno Sampaio",
