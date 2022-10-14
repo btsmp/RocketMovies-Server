@@ -1,12 +1,12 @@
 // Update with your config settings.
 
-const path = require('path')
+import path from "path";
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 
-const development = {
+export const development = {
   client: 'sqlite3',
   connection: {
     filename: path.resolve(__dirname, "src", "database", "database.db")
@@ -19,5 +19,3 @@ const development = {
   },
   useNullAsDefault: true,
 };
-
-module.exports = development
