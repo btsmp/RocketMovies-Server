@@ -25,7 +25,8 @@ export class UsersAvatarController {
     }
 
     const filename = await diskStorage.saveFile(avatarFilename)
-    user.avatar = filename
+    const urlFile = `http://localhost:3333/files/${filename}`
+    user.avatar = urlFile
 
     await knex('users').update(user).where({ id: user_id })
 

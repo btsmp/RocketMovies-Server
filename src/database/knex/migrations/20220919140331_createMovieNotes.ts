@@ -5,7 +5,9 @@ export const up = async (knex: Knex): Promise<void> => knex.schema.createTable("
   table.increments("id")
   table.text('title')
   table.text('description')
+  table.text('banner')
   table.integer('rating')
+
   table.text('user_id').references('id').inTable('users')
 
   table.timestamp('created_at').defaultTo(knex.fn.now())

@@ -15,16 +15,16 @@ export class NotesController {
   */
 
   async create(request: any, response: Response) {
-    const { title, description, rating, tags } = request.body
+    const { title, description, rating, tags, banner } = request.body
     const user_id = request.user.id
-    console.log(user_id)
 
 
     const note_id: MovieNotes = await knex("movie_notes").insert({
       title,
       description,
       rating,
-      user_id
+      user_id,
+      banner
     })
 
     const tagsInsert = tags.map((tag: Tags) => {
@@ -43,10 +43,21 @@ export class NotesController {
   }
 
   async index(request: any, response: Response) {
+    const { title } = request.query
     const user_id = request.user.id
-    console.log(user_id)
+    let notes
 
-    const notes = await knex("movie_notes").where({ user_id })
+    if (title) {
+      notes = await knex("movie_notes")
+        .where({ user_id })
+        .whereLike('title', `%${title}%`)
+        .orderBy("title")
+
+    } else {
+      notes = await knex("movie_notes")
+        .where({ user_id })
+    }
+
 
     const userTags = await knex("tags").where({ user_id })
     const notesWithTags = notes.map(note => {
@@ -57,7 +68,6 @@ export class NotesController {
         tags: noteTag
       }
     })
-    console.log(user_id, notesWithTags)
     return response.json(notesWithTags)
 
   }

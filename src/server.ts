@@ -1,5 +1,10 @@
 import "express-async-errors";
+
+import dotenv from "dotenv"
+dotenv.config()
+
 import express, { Response, Request, NextFunction } from 'express'
+
 import cors from "cors"
 import { routes } from './routes'
 import { AppError } from './utils/AppError'

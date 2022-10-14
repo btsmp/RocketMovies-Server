@@ -48,7 +48,6 @@ export class UsersController {
     user.email = email ?? user.email
 
     if (!oldPassword && password) {
-      console.log(oldPassword)
       throw new AppError("Você precisa informar a senha atual para trocar a senha")
     }
 
