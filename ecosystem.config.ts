@@ -1,6 +1,6 @@
 export const apps = [{
   name: "app",
-  script: "./src/server.js",
+  script: "./build/src/server.js",
   instances: "max",
   env: {
     NODE_ENV: "development",
