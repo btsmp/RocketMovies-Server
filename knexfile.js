@@ -5,7 +5,7 @@
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 
-export const development = {
+const development = {
   client: 'sqlite3',
   connection: {
     filename: './src/database/database.db'
@@ -18,3 +18,5 @@ export const development = {
   },
   useNullAsDefault: true,
 };
+
+module.exports = development
