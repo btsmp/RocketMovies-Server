@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart ": "knex migrate:latest",
     "start": "pm2-runtime start ecosystem.config.js --env production",
-    "postinstall": "knex migrate:latest",
     "build": "tsc",
     "dev": "tsnd src/server.ts"
   },
