@@ -25,7 +25,7 @@ export class UsersAvatarController {
     }
 
     const filename = await diskStorage.saveFile(avatarFilename)
-    const urlFile = `https://rocketmovie-bsmp.netlify.app/files/${filename}`
+    const urlFile = `https://rocket-movies2.herokuapp.com/files/${filename}`
     user.avatar = urlFile
 
     await knex('users').update(user).where({ id: user_id })

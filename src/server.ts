@@ -8,12 +8,15 @@ import express, { Response, Request, NextFunction } from 'express'
 import cors from "cors"
 import { routes } from './routes'
 import { AppError } from './utils/AppError'
+import { UPLOADS_FOLDER } from './config/upload'
+
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
+app.use('/files', express.static(UPLOADS_FOLDER))
 app.use(routes)
 
 app.use((error: any, request: Request, response: Response, next: NextFunction) => {
