@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2-runtime start ecosystem.config.js --env production",
-    "build": "tsc",
+    "start": "pm2-runtime start build/ecosystem.config.js --env production",
+    "build": "tsc -b",
     "dev": "tsnd src/server.ts",
-    "migrate": "knex --knexfile knexfile.ts migrate:latest"
+    "migrate": "knex --knexfile build/knexfile.js migrate:latest"
   },
   "keywords": [],
   "author": "Bruno Sampaio",
