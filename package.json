@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pm2-runtime start build/ecosystem.config.js --env production",
-    "build": "tsc -b",
+    "build": "tsc",
     "dev": "tsnd src/server.ts",
     "migrate": "knex --knexfile build/knexfile.js migrate:latest"
   },
